@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <input type="text">
+    <input type="text" v-model="title">
     <button type="submit">Create</button>
   </form>
 </template>
@@ -8,12 +8,24 @@
 <script> 
 export default {
   data(){
-  //  return 
-  // https://www.youtube.com/watch?v=OlnwgS-gk8Y 28:18
+    return {
+      title: ''
+    }
+
   },
   methods: {
     onSubmit() {
-      console.log("Submit");
+      console.log('Submit', this.title);
+      if (this.title.trim()) {
+        const newTodo = {
+          id: Date.now(),
+          title: this.title,
+          completed: false
+        } 
+        this.$emit('add-todo', newTodo)
+        this.title = ''
+      }
+
     }
   }
 }
